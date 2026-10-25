@@ -1,0 +1,212 @@
+/* ===== Aadhaar acknowledgement page generator ===== */
+:root{
+  --ink:#000;
+  --line:#111;
+  --fs:2.45mm;
+  --fs-name:2.28mm;
+  --fs-small:2.0mm;
+  --fs-t1:2.18mm;
+  --fs-t2:2.2mm;
+  --fs-disc:2.27mm;
+  --fs-disc-h:2.29mm;
+  --fs-rec:2.24mm;
+  --fs-eq1:2.15mm;
+  --fs-eq2:2.40mm;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:Arial,"Helvetica Neue","Noto Sans Devanagari","Noto Sans Bengali","Noto Sans Telugu",sans-serif;
+  color:var(--ink);background:#5a6472;display:flex;overflow:hidden;
+}
+
+/* ---------- sidebar ---------- */
+#sidebar{
+  width:340px;min-width:340px;height:100%;overflow-y:auto;background:#f4f6f9;
+  border-right:1px solid #c9d0da;padding:14px 14px 30px;
+}
+#sidebar h1{font-size:17px;margin-bottom:10px;color:#243044}
+#sidebar details{background:#fff;border:1px solid #d7dce4;border-radius:6px;margin-bottom:8px;padding:8px 10px}
+#sidebar summary{font-weight:bold;cursor:pointer;font-size:13.5px;color:#2b3a55}
+#sidebar label{display:block;font-size:12px;color:#42506a;margin-top:8px}
+#sidebar input,#sidebar select,#sidebar textarea{
+  width:100%;margin-top:3px;padding:5px 6px;font-size:13px;border:1px solid #c4ccd8;border-radius:4px;font-family:inherit;
+}
+#sidebar textarea{resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.row2{display:block}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.toolbar button{
+  flex:1 1 auto;font-size:12.5px;padding:7px 8px;border:1px solid #b9c2cf;background:#fff;border-radius:5px;cursor:pointer;
+}
+.toolbar button.primary{background:#1f6feb;color:#fff;border-color:#1f6feb;font-weight:bold}
+.toolbar button:hover{filter:brightness(.97)}
+.hint{font-size:11.5px;color:#5b677d;margin-top:6px;line-height:1.5}
+
+/* ---------- stage ---------- */
+#stage{flex:1;height:100%;overflow:auto;display:flex;justify-content:center;padding:24px}
+.page{
+  width:210mm;height:297mm;background:#fff;position:relative;flex:none;
+  box-shadow:0 6px 30px rgba(0,0,0,.45);overflow:hidden;
+}
+
+/* ---------- frame & header ---------- */
+.frame{
+  position:absolute;left:9.98mm;top:9.98mm;width:189.65mm;height:267.5mm;
+  border:.3mm solid var(--line);
+}
+.bold{font-weight:bold}
+.b{font-weight:bold}
+.pre{white-space:pre-wrap}
+.line{min-height:0}
+
+.hdr{position:absolute;left:0;top:0;width:100%;height:15.285mm;border-bottom:.3mm dotted var(--line)}
+.emblem{position:absolute;left:1.9mm;top:.9mm;height:12.5mm;width:auto}
+.aalogo{position:absolute;right:2.0mm;top:.88mm;width:18.7mm;height:auto}
+.titles{position:absolute;left:-4.9mm;top:.97mm;width:100%;text-align:center}
+.t1{font-size:var(--fs-t1);font-weight:bold;line-height:4.73mm}
+.t2{font-size:var(--fs-t2);font-weight:bold;line-height:4.9mm}
+
+.sidrow{position:absolute;left:0;top:16.08mm;width:100%;height:3.81mm;
+  display:flex;align-items:baseline;padding:0 1.24mm;font-size:2.15mm;gap:.55mm}
+.sidrow [data-field]{font-size:3.03mm}
+.sidrow .sid-date{margin-left:.5mm}
+.apptrow{position:absolute;left:0;top:18.855mm;width:100%;height:3.45mm;
+  display:flex;align-items:center;padding:0 1.24mm;font-size:2.15mm;gap:.55mm}
+
+/* ---------- main data box ---------- */
+.dabox{position:absolute;left:.94mm;top:22.27mm;width:187.3mm;height:152.9mm;border:.25mm dotted var(--line)}
+.toparea{position:relative;height:78.51mm}
+.leftwrap{position:absolute;left:0;top:0;width:147.22mm;height:100%}
+.row{display:flex;box-sizing:border-box}
+.row .c1{width:73.61mm;padding:.9mm 1.6mm 0}
+.row .c2{flex:1;padding:.9mm 1.6mm 0}
+.row .cfull{width:100%;padding:.9mm 1.6mm 0}
+.divb{border-right:.25mm dotted var(--line)}
+.addrrow{height:54.91mm;border-bottom:.25mm dotted var(--line)}
+.addrrow .c1{padding-top:1.58mm}
+.addrrow .c2{padding-top:.21mm}
+.dobrow{height:6.94mm;border-bottom:.25mm dotted var(--line)}
+.dobrow .c1{padding:0 1.6mm;line-height:2.89mm;height:100%;display:block}
+.dobrow .c2{display:flex;flex-direction:column;justify-content:center;height:100%;line-height:2.54mm}
+.docsrow{height:5.75mm;border-bottom:.25mm dotted var(--line);font-size:2.2mm}
+.docsrow .cfull{display:block;padding:.93mm 1.9mm 0}
+.thinrow{height:3.05mm;border-bottom:.25mm dotted var(--line)}
+.inforow{height:7.95mm;font-size:2.2mm}
+.inforow .cfull{display:block;padding:.87mm 1.9mm 0}
+.addrrow .line{font-size:var(--fs-name);line-height:1.18}
+.addrrow .c2 .line{font-size:2.15mm}
+.dobrow{font-size:var(--fs)}
+.dobnote{margin-left:1.6mm}
+
+.rightcol{position:absolute;right:0;top:0;width:39.82mm;height:100%;border-left:none}
+.photobox{position:absolute;left:0;top:0;width:100%;height:31.63mm;display:flex;align-items:center;justify-content:center;
+  border:.25mm dotted var(--line);border-top:none;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:.8mm 1.3mm}
+.photobox img{max-width:calc(100% - 2mm);max-height:calc(100% - 2mm);object-fit:cover;display:none}
+.photobox img.on{display:block;width:26.4mm;height:29.6mm;object-fit:cover}
+.fpbox{position:absolute;left:0;top:31.63mm;width:100%;height:46.88mm;
+  border:.25mm dotted var(--line);border-top:none;border-bottom:none}
+.fptitle{text-align:center;font-weight:bold;font-size:2.25mm;padding:.065mm 0 0 2mm}
+.fpnote{text-align:center;font-style:italic;font-size:2.2mm;line-height:1.35;padding:0 2mm 0 4mm;margin-top:-.17mm}
+.bios{position:absolute;left:3.6mm;top:39.65mm;font-size:2.05mm;line-height:2.54mm}
+.bios .bioval{font-size:2.0mm}
+
+/* 18+ fingerprint quality hands */
+.fphands{display:none}
+body[data-fp="adult"] .fphands{display:flex;justify-content:center;gap:1.2mm;padding-top:1.1mm}
+body[data-fp="adult"] .fpnote{display:none}
+body[data-fp="adult"] .bios{top:33.3mm}
+.fphand{width:18.3mm}
+.fphimg{position:relative;width:15.6mm;height:21.17mm;margin:0 auto}
+.fphand img{display:block;width:100%;height:100%;object-fit:contain}
+.fm{position:absolute;transform:translate(-50%,-50%);font-size:3.2mm;font-weight:bold;line-height:1;font-family:Arial,sans-serif}
+.fm.ok{font-size:4.2mm}
+.fm.ok,.fmk.ok{color:#28a745}
+.fm.bad,.fmk.bad{color:#dc3545}
+.fmk{font-weight:bold}
+.fphlbl{text-align:center;font-weight:bold;font-size:1.5mm;line-height:1.9mm;margin-top:.25mm}
+.fphcap{text-align:center;font-size:1.18mm;line-height:1.42mm;margin-top:.45mm;padding:0 .3mm}
+
+.regrow{position:absolute;left:0;top:78.17mm;width:100%;height:8.13mm;
+  border-top:.25mm dotted var(--line);
+  display:flex;align-items:flex-start;padding:1.0mm .75mm 0;font-size:2.22mm;gap:1.4mm;white-space:nowrap}
+.regrow .gap{margin-left:3.2mm}
+.boxsliver{position:absolute;left:0;top:86.64mm;width:100%;height:.85mm}
+
+/* ---------- plain blocks ---------- */
+.youcan{position:absolute;left:2.1mm;top:108.23mm;font-size:2.28mm;font-weight:bold}
+.disc{position:absolute;left:1.75mm;top:114.78mm;width:183.7mm}
+.disc-h{font-size:var(--fs-disc-h);font-weight:bold;line-height:2.62mm}
+.disc-p{font-size:var(--fs-disc);line-height:2.68mm;text-align:justify}
+.barcode{position:absolute;left:8.82mm;top:135.5mm;width:84.6mm;height:6.45mm}
+.barcode svg{display:block;width:100%;height:100%}
+.topsign{position:absolute;left:158.9mm;top:146.56mm;text-align:left;font-size:2.27mm;line-height:2.71mm}
+.confirm{position:absolute;left:1.9mm;top:159.42mm;width:164.5mm;font-size:2.30mm;line-height:1.18}
+.hofline{position:absolute;left:1.9mm;top:167.44mm;font-size:2.26mm}
+.hofline .gap2{margin-left:0}
+
+/* ---------- cash receipt ---------- */
+.receipt{position:absolute;left:1.795mm;top:178.805mm;width:130.13mm;border-collapse:collapse;table-layout:fixed;
+  font-size:var(--fs-rec);line-height:1.1;border:.25mm solid var(--line)}
+.receipt td{border:.25mm solid var(--line);padding:.25mm 1mm;vertical-align:middle;height:2.96mm;box-sizing:border-box}
+.receipt tr.rhead td{height:2.96mm;text-align:center;font-weight:bold}
+.receipt tr.rreg td{height:7.733mm;font-weight:bold;vertical-align:top;padding:1.15mm .25mm 0;line-height:1.15}
+.receipt tr.rinfo td{font-weight:bold}
+.receipt tr.rnew td{height:3.13mm}
+.receipt tr.rsvc td{text-align:left;padding:.20mm .9mm .20mm .9mm}
+.receipt tr.rsvc td:first-child{text-align:left;padding-left:.25mm}
+.receipt tr.rsvc td.cname{padding-left:2mm}
+.receipt td.cupd{width:13.4mm;text-align:center;font-weight:bold}
+.receipt td.cname{width:45.65mm;font-weight:bold;padding-left:2mm}
+.receipt tr.rsvc td.cname,.receipt tr.rnew td.cname{width:59.05mm}
+.receipt td.cflag{width:6.77mm;text-align:center}
+.receipt td.camt{width:23.86mm;text-align:center;font-weight:bold}
+.receipt td.cgst{width:8.63mm;text-align:center;font-weight:bold}
+.receipt td.ctot{width:31.82mm;text-align:center;font-weight:bold}
+.receipt td.camt,.receipt td.cgst,.receipt td.ctot,.receipt td.cflag{padding:.25mm .5mm}
+.receipt tr.rsvc td.camt,.receipt tr.rsvc td.cgst,.receipt tr.rsvc td.ctot,.receipt tr.rsvc td.cflag{padding:.20mm .9mm;text-align:left}
+.receipt td.spanall{font-weight:normal}
+
+.recsign{position:absolute;left:136.9mm;top:209.07mm;width:47mm;text-align:center;font-size:2.32mm;line-height:1.1}
+.recsign [data-i18n="sigCap"]{font-size:2.0mm}
+.opsign{position:absolute;left:143.8mm;top:223.53mm;width:33mm;text-align:center;font-size:2.27mm;line-height:1.18}
+
+/* ---------- footer ---------- */
+.social{position:absolute;left:0;top:243.37mm;width:100%;height:8.4mm}
+.soc{position:absolute;top:.6mm;height:7.1mm;display:flex;align-items:flex-end;gap:1.5mm;font-size:2.2mm}
+.soc img{display:block}
+.soc i{font-style:normal;color:#333;margin-left:2.95mm;width:0;height:0;font-size:0;position:relative}
+.soc i::before{content:"";position:absolute;left:0;bottom:2.9px;width:1.5px;height:21.8px;background:#333;transform:rotate(5deg)}
+.soc b{font-weight:bold;position:relative;top:2px;letter-spacing:.03em}
+.enquiry{position:absolute;left:0;top:251.92mm;width:100%;height:15.2mm;
+  border-top:.25mm dotted var(--line);border-bottom:.25mm dotted var(--line);padding:.7mm .2mm 0 1.9mm}
+.eq1{font-size:var(--fs-eq1);line-height:1.5;display:flex;align-items:center;gap:8.12mm;flex-wrap:nowrap}
+.eq1 .bold{font-size:2.11mm}
+.eq1 .eqi{display:inline-flex;align-items:center;gap:.9mm;font-weight:bold;font-size:2.29mm}
+.eq1 .eqi img{height:4.05mm;width:5.3mm;display:block}
+.eq2{font-size:var(--fs-eq2);line-height:2.60mm;margin-top:.33mm;text-align:justify}
+
+/* ---------- isha (te) demo layout variants ---------- */
+[data-sample="isha"] .sidrow{display:grid;grid-template-columns:65.3mm auto auto;column-gap:.55mm;
+  align-items:baseline;justify-content:start}
+[data-sample="isha"] .sidrow .sid-val{position:absolute;left:1.24mm;top:2.35mm}
+[data-sample="isha"] .sidrow .sid-date{margin-left:0}
+[data-sample="isha"] .sidrow > span:first-child{position:relative;top:-5px;letter-spacing:-.04em}
+[data-sample="isha"] .apptrow{padding-left:67.0mm;font-size:2.27mm}
+[data-sample="isha"] .confirm{width:177.4mm;text-align:justify}
+[data-sample="isha"] [data-field="confirmReg"]{font-size:2.00mm}
+[data-sample="isha"] .recsign [data-i18n="sigCap"]{font-size:1.8mm}
+
+/* ---------- te (isha text) tweaks ---------- */
+[data-lang="te"] .titles{top:1.22mm}
+[data-lang="te"] [data-i18n="title1suf"],[data-lang="te"] [data-i18n="title2suf"]{letter-spacing:-.065em}
+
+/* ---------- print ---------- */
+@media print{
+  body{background:#fff;display:block;overflow:visible}
+  #sidebar{display:none}
+  #stage{padding:0;display:block;overflow:visible}
+  .page{box-shadow:none;margin:0}
+  @page{size:A4;margin:0}
+}
