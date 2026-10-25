@@ -1,94 +1,165 @@
-# Aadhaar Enrolment Acknowledgement Slip Platform & V-UCL Integration
+# V-UCL Laravel & Enrolment Management Platform
 
-A comprehensive, production-ready web application and management platform for generating standardized Unique Identification Authority of India (UIDAI) Aadhaar enrolment and update acknowledgement slips. Built with high-fidelity client-side PDF rendering, multi-lingual support, SID (Enrolment Number) barcode generation, and robust backend integration architecture supporting legacy V-UCL (Aadhaar Update Client Lite) systems.
+A high-performance, enterprise-grade web application and management platform built for UIDAI Aadhaar Enrolment Agencies, Operators, Distributors, and Retailers. It combines a robust Laravel backend with legacy PHP bridging, an automated managed hosting installer (`install.php`), advanced SID (Enrolment Number) cell tracking, multi-role access control, and client-side high-fidelity Aadhaar acknowledgement slip generation.
 
 ---
 
-## 🚀 Key Features
+## 🌟 Key Features
 
-### 1. Aadhaar Acknowledgement Slip Form & Generator
-- **Precise A4 Print & PDF Layout**: Pixel-perfect layout adhering to official UIDAI acknowledgment slip specifications (dimensions, typography, borders, and spacing).
-- **SID (Enrolment Number) Support & Barcode Generation**: Dynamic generation of 28-digit SID/Enrolment numbers with automated **PDF417 barcode encoding** using `bwip-js`.
-- **Multi-Language Template Engine**: Full support for regional languages including Hindi (हिन्दी), Bengali (বাংলা), and Telugu (తెలుగు) with localized titles, consent sentences, and disclosures.
-- **Smart Biometric & Age Mode Detection**: Automatic detection of resident age from Date of Birth (calculating 18+ adult hand fingerprint quality blocks vs. minor exemption notes).
-- **Comprehensive Data Fields**:
-  - Resident Name & Gender with Regional Scripting
-  - Full Address (English & Regional Script) & Relationship/Care-Of details
-  - Date of Birth with Birth Certificate statutory reference notes
-  - Contact details (Mobile, Email) and Document proof checklist
-  - Information Sharing Disclosure & Biometrics Captured summary
-  - Registrar, Enrolment Agency, and Location ID (Latitude/Longitude)
-  - Consent block with Head of Family (HoF) Name and UID mapping
-  - Detailed **Cash Receipt** table with service breakdowns (New Enrolment, Mandatory Biometric Update, Demographic Update, Biometric Update) and 18% GST calculation.
-  - Operator, Resident, and Receipt Signatures
+### 1. Multi-Role Admin / Operator / Distributor / Retailer Panel
+- **Role-Based Access Control (RBAC)**: Hierarchical access structure catering to:
+  - **Administrator**: Complete system configuration, registrar/agency mappings, global audit logs, pricing rules, and operator commission management.
+  - **Distributor**: Regional network management, retailer onboarding, wallet top-ups, and transaction volume reporting.
+  - **Retailer / Enrolment Center**: Counter-level cash collection, service request logging, and daily reconciliation.
+  - **Operator**: Biometric enrolment data entry, demographic updates, and acknowledgement slip generation.
+- **Wallet & Commission System**: Automated ledger tracking for distributors and retailers with instant settlement and balance alerts.
 
-### 2. Legacy V-UCL Classic PHP Integration
-- Designed to integrate seamlessly with **V-UCL (Aadhaar Update Client Lite)** classic PHP backend environments.
-- Supports legacy session handling, data synchronization, and client-server payload formatting for offline/online enrolment stations.
+### 2. Aadhaar Acknowledgement Slip Form & PDF Engine
+- **UIDAI-Compliant A4 Layout**: Pixel-perfect layout adhering to official Unique Identification Authority of India (UIDAI) acknowledgment slip specifications (margins, typography, borders, and structured sections).
+- **SID (Enrolment Number) Barcode Generation**: Dynamic generation of 28-digit SID/Enrolment numbers with automated **PDF417 2D barcode encoding** using `bwip-js`.
+- **Multi-Language Template Engine**: Localized support for regional languages including Hindi (हिन्दी), Bengali (বাংলা), and Telugu (తెలుగు) with dynamic consent sentences and statutory disclosures.
+- **Smart Age & Biometric Mode Detection**: Automatic detection of resident age from Date of Birth (calculating adult vs. minor biometric exemption rules).
+- **Comprehensive Receipt Ledger**: Detailed cash receipt breakdown covering New Enrolments, Mandatory Biometric Updates, Demographic Updates, and statutory 18% GST calculation.
 
-### 3. Managed Hosting Installer (`install.php`)
-- Automated guided setup script for managed hosting environments.
-- Performs automatic database connection validation, table schema creation, directory permission checks, and environment configuration.
+### 3. SID Cell Tracking & Lifecycle Management
+- **Enrolment Tracking**: End-to-end tracking of Enrolment IDs (SIDs) across stages: `Registered`, `QC Verified`, `Synced to UIDAI`, `Generated`, and `Rejected/On Hold`.
+- **Audit Trails**: Detailed event logging for every enrolment packet update, operator action, and verification check.
 
-### 4. Database Migrations & Management
-- Structured SQL migration scripts and database initialization routines for managing resident enrolment logs, transaction receipts, audit trails, and operator credentials.
+### 4. Managed Hosting Installer (`install.php`)
+- **Automated Setup Wizard**: Guided installation script designed for cPanel, shared hosting, and VPS environments.
+- **Automated Checks**: Validates PHP version, required extensions (`PDO`, `Mbstring`, `OpenSSL`, `JSON`), directory permissions (`storage`, `bootstrap/cache`), and database connectivity before running table migrations and seeders.
 
-### 5. Authentication & Security
-- Secure operator session management and role-based access control (RBAC).
-- Protection against unauthorized data access during enrolment data entry and receipt generation.
-
-### 6. Administration Panel
-- Centralized management dashboard for operators and administrators.
-- Monitor daily enrolment counts, search transaction records, verify receipt numbers, manage agency/registrar mappings, and audit operator activity.
+### 5. Legacy PHP Bridging
+- **V-UCL Compatibility Layer**: Seamless integration bridge between modern Laravel architectural standards and legacy **V-UCL (Aadhaar Update Client Lite)** backend sync scripts and packet XML formatters.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-├── index.html          # Main acknowledgement form UI & printable A4 stage layout
-├── app.js              # Application controller, i18n, sample data, state sync, and PDF/barcode handlers
-├── style.css           # Print & screen stylesheets optimized for A4 (210mm x 297mm)
-├── assets/             # Government emblems, UIDAI logo, hand gesture diagrams, and sample portraits
-│   ├── emblem.jpeg     # National Emblem of India placeholder
-│   ├── aalogo.jpeg     # Aadhaar / UIDAI logo
-│   ├── left-hand.png   # Left hand fingerprint quality template
-│   ├── right-hand.png  # Right hand fingerprint quality template
-│   └── photo_*.jpg     # Pre-loaded sample resident photos
-└── vendor/             # Third-party client-side libraries
-    ├── html2pdf.bundle.min.js # Html2pdf wrapper for client-side PDF export
-    ├── bwip-js-min.js         # Barcode writer in JavaScript (PDF417 support)
-    └── JsBarcode.all.min.js   # Linear barcode utilities
+├── app/                      # Laravel application source code (Controllers, Models, Middleware)
+│   ├── Http/Controllers/     # Multi-role dashboard & API controllers
+│   ├── Models/               # Enrolment, User, Wallet, and Transaction models
+│   └── Services/             # V-UCL bridging & PDF/Barcode generation services
+├── database/                 # Migrations, factories, and database seeders
+├── public/                   # Public web root
+│   ├── index.html            # Client-side acknowledgement form UI & printable A4 stage layout
+│   ├── app.js                # Frontend controller, i18n, state sync, and PDF/barcode handlers
+│   ├── style.css             # Print & screen stylesheets optimized for A4 (210mm x 297mm)
+│   ├── install.php           # Managed hosting automated installer script
+│   └── assets/               # Government emblems, UIDAI logo, hand gesture diagrams, and portraits
+├── resources/                # Blade views and frontend assets
+├── routes/                   # Web and API route definitions
+└── vendor/                   # Composer dependencies & third-party libraries (bwip-js, html2pdf, etc.)
 ```
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+), Grid & Flexbox layouts.
-- **PDF Generation**: `html2pdf.js` (html2canvas + jsPDF).
-- **Barcode Rendering**: `bwip-js` (PDF417 2D barcode generation).
-- **Backend / Integration**: PHP (Legacy V-UCL integration & `install.php` installer scripts), SQL database migrations.
+- **Backend**: PHP 8.1+, Laravel Framework, MySQL / MariaDB.
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+), Blade templates.
+- **PDF & Barcode**: `html2pdf.js` (html2canvas + jsPDF), `bwip-js` (PDF417 2D barcodes).
+- **Hosting & Deployment**: Managed installer (`install.php`), Composer, Apache / Nginx.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation & Setup
 
-### Local Development / Frontend Preview
-1. Clone or download the repository.
-2. Serve the directory using any static web server (e.g., Live Server in VS Code, Python HTTP server, or PHP built-in server):
-   ```bash
-   php -S localhost:8000
+### Method A: Managed Hosting Automated Installer (`install.php`)
+1. Upload the project archive to your web server public directory.
+2. Navigate in your browser to:
+   ```text
+   http://yourdomain.com/install.php
    ```
-3. Open `http://localhost:8000` in your browser.
-4. Use the sidebar controls to fill in resident details, upload photos, switch languages, or click pre-loaded sample buttons (**Nahid sample**, **Isha sample**, **Baljeet sample**) for instant preview.
-5. Click **Download PDF** to export a high-resolution Aadhaar Enrolment Acknowledgement slip.
+3. Follow the interactive setup wizard to configure database credentials, generate application keys, and create the initial administrator account.
 
-### Managed Hosting Installation
-1. Upload the project files to your PHP-enabled web hosting server.
-2. Navigate to `http://yourdomain.com/install.php` to run the automated managed installer.
-3. Configure your MySQL/MariaDB database credentials and complete the setup wizard.
-4. Access the Admin Panel using your provisioned administrator credentials.
+### Method B: Manual Developer Setup (Local Environment)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/shaktibiplabDev/aadhaar-acknowledgement-platform.git
+   cd aadhaar-acknowledgement-platform
+   ```
+2. **Install Dependencies**:
+   ```bash
+   composer install
+   ```
+3. **Configure Environment**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. **Configure Database**:
+   Update your database settings in `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=v_ucl_laravel
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
+5. **Run Migrations & Seeders**:
+   ```bash
+   php artisan migrate --seed
+   ```
+6. **Start Development Server**:
+   ```bash
+   php artisan serve
+   ```
+   Access the application at `http://localhost:8000`.
+
+---
+
+## ⚙️ Configuration
+
+Key configuration options in `.env`:
+- `APP_NAME`: Platform name (default: V-UCL Enrolment Platform)
+- `VUCL_AGENCY_CODE`: Registered UIDAI Enrolment Agency Code
+- `VUCL_REGISTRAR_CODE`: UIDAI Registrar ID
+- `VUCL_SYNC_MODE`: Operational mode (`offline` or `online` V-UCL bridge sync)
+
+---
+
+## 🔌 API Integration
+
+The platform provides RESTful API endpoints for external V-UCL client applications and remote stations to synchronize enrolments, check packet status, and manage wallets.
+
+### Authentication
+Authenticate requests by passing a Bearer Token in the authorization header:
+```http
+Authorization: Bearer <your_api_token>
+```
+
+### Endpoints
+
+#### 1. Submit Enrolment / Acknowledgment Packet
+- **URL**: `/api/v1/enrolments`
+- **Method**: `POST`
+- **Payload**:
+  ```json
+  {
+    "sid": "1234123451234567890123456789",
+    "resident_name": "Rajesh Kumar",
+    "gender": "M",
+    "dob": "1990-05-15",
+    "mobile": "9876543210",
+    "operator_id": "OP1002",
+    "enrolment_type": "new"
+  }
+  ```
+
+#### 2. Check Enrolment Status (SID Tracking)
+- **URL**: `/api/v1/enrolments/{sid}/status`
+- **Method**: `GET`
+- **Response**:
+  ```json
+  {
+    "sid": "1234123451234567890123456789",
+    "status": "QC_VERIFIED",
+    "updated_at": "2026-10-25T10:30:00Z"
+  }
+  ```
 
 ---
 
